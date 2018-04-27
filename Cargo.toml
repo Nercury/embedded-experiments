@@ -1,0 +1,4 @@
+[workspace]
+members = [
+    "part01-blink"
+]

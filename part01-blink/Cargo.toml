@@ -1,0 +1,6 @@
+[package]
+name = "part01-blink"
+version = "0.1.0"
+authors = ["Nerijus Arlauskas <nercury@gmail.com>"]
+
+[dependencies]
