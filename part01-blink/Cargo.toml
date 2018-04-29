@@ -4,3 +4,12 @@ version = "0.1.0"
 authors = ["Nerijus Arlauskas <nercury@gmail.com>"]
 
 [dependencies]
+panic-abort = "0.1.1"
+
+[dependencies.stm32f1]
+version = "0.1.0"
+features = ["stm32f100", "rt"]
+
+[profile.release]
+lto = true
+debug = true

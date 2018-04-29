@@ -1,4 +1,4 @@
 [workspace]
 members = [
-    "part01-blink"
+    "part01-blink",
 ]
