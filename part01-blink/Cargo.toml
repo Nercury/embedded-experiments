@@ -4,10 +4,13 @@ version = "0.1.0"
 authors = ["Nerijus Arlauskas <nercury@gmail.com>"]
 
 [dependencies]
-panic-abort = "0.1.1"
+#panic-halt = "0.2.0"
+panic-semihosting = "0.5.1"
+cortex-m-rt = "0.6.7"
+cortex-m-semihosting = "0.3.2"
 
 [dependencies.stm32f1]
-version = "0.1.0"
+version = "0.6.0"
 features = ["stm32f100", "rt"]
 
 [profile.release]
