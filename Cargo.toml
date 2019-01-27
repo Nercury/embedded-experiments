@@ -1,4 +1,6 @@
 [workspace]
 members = [
     "part01-blink",
+    "part02-clock",
+    "part03-g0-hello",
 ]
