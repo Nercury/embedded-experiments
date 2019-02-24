@@ -1,5 +1,3 @@
-extern crate cc;
-
 use std::env;
 use std::fs::File;
 use std::io::Write;
@@ -17,7 +15,4 @@ fn main() {
     // Only re-run the build script when memory.x is changed,
     // instead of when any part of the source code changes.
     println!("cargo:rerun-if-changed=memory.x");
-
-    let mut build = cc::Build::new();
-
 }

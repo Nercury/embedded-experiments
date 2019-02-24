@@ -2,5 +2,18 @@
 members = [
     "part01-blink",
     "part02-clock",
-    "part03-g0-hello",
+    "part03a-hal",
+    "part03b-i2c",
+    "part05-g0-hello",
+    "part06-g0-i2c",
 ]
+
+[profile.dev]
+codegen-units = 1
+incremental = false
+
+[profile.release]
+incremental = false
+codegen-units = 1
+debug = true
+lto = true

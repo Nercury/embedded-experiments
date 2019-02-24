@@ -1,18 +1,22 @@
 [package]
-name = "part02-clock"
+name = "part03a-hal"
 version = "0.1.0"
 authors = ["Nerijus Arlauskas <nercury@gmail.com>"]
+edition = "2018"
 
 [dependencies]
 panic-halt = "0.2.0"
 panic-semihosting = "0.5.1"
+cortex-m = "0.5.8"
 cortex-m-rt = "0.6.7"
 cortex-m-semihosting = "0.3.2"
+nb = "0.1.1"
 
 [dependencies.stm32f1]
 version = "0.6.0"
 features = ["stm32f100", "rt"]
 
-# used when invoking C code to configure system clock
-# [build-dependencies]
-# cc = "1.0.28"
+[dependencies.stm32f1xx-hal]
+version = "0.2.0"
+git = "https://github.com/stm32-rs/stm32f1xx-hal.git"
+features = ["stm32f100", "rt"]

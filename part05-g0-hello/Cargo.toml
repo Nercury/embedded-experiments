@@ -1,0 +1,20 @@
+[package]
+name = "part05-g0-hello"
+version = "0.1.0"
+authors = ["Nerijus Arlauskas <nercury@gmail.com>"]
+
+[dependencies]
+panic-halt = "0.2.0"
+panic-semihosting = "0.5.1"
+cortex-m = "0.5.8"
+cortex-m-rt = "0.6.7"
+cortex-m-semihosting = "0.3.2"
+
+[dependencies.stm32g0]
+version = "0.6.0"
+features = ["stm32g0x1", "rt"]
+
+[dependencies.stm32g0xx-hal]
+version = "0.0.0"
+git = 'https://github.com/Nercury/stm32g0xx-hal'
+features = ["stm32g071", "rt"]
