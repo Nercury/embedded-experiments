@@ -4,8 +4,8 @@ target extended-remote :3333
 set print asm-demangle on
 
 # detect unhandled exceptions, hard faults and panics
-#break DefaultHandler
-#break UserHardFault
+break DefaultHandler
+break UserHardFault
 break rust_begin_unwind
 
 monitor arm semihosting enable
