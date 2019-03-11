@@ -6,12 +6,5 @@ edition = "2018"
 
 [dependencies]
 embedded-hal = "0.2.2"
-
-[profile.dev]
-codegen-units = 1
-incremental = false
-
-[profile.release]
-codegen-units = 1
-debug = true
-lto = true
+heapless = "0.4.2"
+bitcanvas = { path = "../bitcanvas" }

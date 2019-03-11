@@ -12,8 +12,11 @@ cortex-m-rt = "0.6.7"
 cortex-m-semihosting = "0.3.2"
 nb = "0.1.1"
 shared-bus = { version = "0.1.4", features = ["cortexm"] }
+embedded-graphics = "0.4.5"
+profont = { version = "0.2.0", features = [] }
 mcp23008 = { path = "../mcp" }
 is31fl3730 = { path = "../is31fl3730" }
+bitcanvas = { path = "../bitcanvas" }
 
 [dependencies.stm32f1]
 version = "0.6.0"

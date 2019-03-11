@@ -8,6 +8,8 @@ mod address;
 mod register;
 mod lighting;
 mod configuration;
+pub mod display;
+pub mod pixels;
 
 pub use lighting::{
     Lighting,
@@ -51,26 +53,26 @@ impl<I2C, E> Device<I2C>
     }
 
     /// Write pixels for the first matrix. Call update to flush updates.
-    pub fn set_matrix1_columns_rows(&mut self, start_column: u8, rows: &[u8]) -> Result<(), E> {
+    pub fn set_matrix1_rows(&mut self, start_row: u8, rows: &[u8]) -> Result<(), E> {
         const BUFLEN: usize = 1 + 11;
         let mut writebuf: [u8; BUFLEN] = [0; BUFLEN];
 
         let final_write_len = rows.len() + 1;
 
-        writebuf[0] = register::Register::Matrix1Begin as u8 + start_column;
+        writebuf[0] = register::Register::Matrix1Begin as u8 + start_row;
         writebuf[1..final_write_len].copy_from_slice(rows);
 
         self.i2c.write(self.address as u8, &writebuf[..final_write_len])
     }
 
     /// Write pixels for the second matrix. Call update to flush updates.
-    pub fn set_matrix2_columns_rows(&mut self, start_column: u8, rows: &[u8]) -> Result<(), E> {
+    pub fn set_matrix2_rows(&mut self, start_row: u8, rows: &[u8]) -> Result<(), E> {
         const BUFLEN: usize = 1 + 11;
         let mut writebuf: [u8; BUFLEN] = [0; BUFLEN];
 
         let final_write_len = rows.len() + 1;
 
-        writebuf[0] = register::Register::Matrix2Begin as u8 + start_column;
+        writebuf[0] = register::Register::Matrix2Begin as u8 + start_row;
         writebuf[1..final_write_len].copy_from_slice(rows);
 
         self.i2c.write(self.address as u8, &writebuf[..final_write_len])

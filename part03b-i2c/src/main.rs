@@ -18,6 +18,12 @@ use stm32f1xx_hal::{
 use nb::block;
 use cortex_m_rt::{entry, exception};
 use is31fl3730 as isd;
+use isd::display::OutputRows;
+use bitcanvas::BitCanvas;
+use bitcanvas::consts::*;
+use embedded_graphics::prelude::*;
+use profont::ProFont7Point;
+use is31fl3730::pixels::DataBits;
 
 #[entry]
 fn main() -> ! {
@@ -57,37 +63,54 @@ fn main() -> ! {
     );
     let bus = shared_bus::CortexMBusManager::new(i2c);
 
+    let mut canvas = BitCanvas::<W32, H8>::new(32, 8).unwrap();
+
     let mut matrix_device = isd::Device::new(isd::Address::Address11, bus.acquire());
     matrix_device.modify_lighting(|c|
-        c.set_current(isd::LightingCurrent::Current5mA)).expect("init1");
+        c.set_current(isd::LightingCurrent::Current10mA)).expect("init1");
     matrix_device.modify_config(|c|
         c.set_display_mode(isd::ConfigDisplayMode::Matrix1and2)).unwrap();
 
     let mut matrix_device2 = isd::Device::new(isd::Address::Address01, bus.acquire());
     matrix_device2.modify_lighting(|c|
-        c.set_current(isd::LightingCurrent::Current5mA)).expect("init2");
+        c.set_current(isd::LightingCurrent::Current10mA)).expect("init2");
     matrix_device2.modify_config(|c|
         c.set_display_mode(isd::ConfigDisplayMode::Matrix1and2)).unwrap();
 
     let mut led = gpioa.pa1.into_push_pull_output(&mut gpioa.crl);
 
-    let mut timer = Timer::syst(cp.SYST, 10.hz(), clocks);
+    let mut timer = Timer::syst(cp.SYST, 5.hz(), clocks);
 
-    let mut index: u8 = 0;
     loop {
+        canvas.draw(
+            ProFont7Point::render_str(" Neee!")
+                .into_iter()
+        );
+        isd::display::MatrixTargetPrimary8x8{}
+            .output_pixels(&mut matrix_device,
+                           &canvas
+                               .flip_h()
+                               .offset_bytes(1, 0)
+            ).expect("set-1-1");
+        isd::display::MatrixTargetSecondary8x8{}
+            .output_pixels(&mut matrix_device,
+                           &canvas
+                               .offset_bytes(-1, 0)
+                               .rotate_90()
+            ).expect("set-1-2");
+        isd::display::MatrixTargetPrimary8x8{}
+            .output_pixels(&mut matrix_device2,
+                           &canvas
+                               .flip_h()
+                               .offset_bytes(3, 0)
+            ).expect("set-2-1");
+        isd::display::MatrixTargetSecondary8x8{}
+            .output_pixels(&mut matrix_device2,
+                           &canvas
+                               .offset_bytes(-3, 0)
+                               .rotate_90()
+            ).expect("set-2-2");
 
-        matrix_device.set_matrix1_columns_rows(index, &[0b00000000]).expect("fail-1-1");
-        matrix_device.set_matrix2_columns_rows(index, &[0b00000000]).expect("fail-1-2");
-        matrix_device2.set_matrix1_columns_rows(index, &[0b00000000]).expect("fail-2-1");
-        matrix_device2.set_matrix2_columns_rows(index, &[0b00000000]).expect("fail-2-2");
-        index += 1;
-        if index == 8 {
-            index = 0;
-        }
-        matrix_device.set_matrix1_columns_rows(index, &[0b11111111]).expect("fail-1-1");
-        matrix_device.set_matrix2_columns_rows(index, &[0b11111111]).expect("fail-1-2");
-        matrix_device2.set_matrix1_columns_rows(index, &[0b11111111]).expect("fail-2-1");
-        matrix_device2.set_matrix2_columns_rows(index, &[0b11111111]).expect("fail-2-2");
         matrix_device.update().expect("fail-1-u");
         matrix_device2.update().expect("fail-2-u");
 
