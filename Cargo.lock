@@ -138,6 +138,13 @@ version = "0.4.3"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 
 [[package]]
+name = "lsm9ds1"
+version = "0.0.1"
+dependencies = [
+ "embedded-hal 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
+]
+
+[[package]]
 name = "mcp23008"
 version = "0.0.1"
 dependencies = [
@@ -237,6 +244,7 @@ dependencies = [
  "embedded-graphics 0.4.7 (registry+https://github.com/rust-lang/crates.io-index)",
  "embedded-hal 0.2.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "is31fl3730 0.0.1",
+ "lsm9ds1 0.0.1",
  "mcp23008 0.0.1",
  "nb 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "num-format 0.4.0 (registry+https://github.com/rust-lang/crates.io-index)",

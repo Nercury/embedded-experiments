@@ -1,0 +1,8 @@
+[package]
+name = "lsm9ds1"
+version = "0.0.1"
+authors = ["Nerijus Arlauskas <nercury@gmail.com>"]
+edition = "2018"
+
+[dependencies]
+embedded-hal = "0.2.2"

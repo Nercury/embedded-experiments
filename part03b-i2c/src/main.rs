@@ -4,6 +4,7 @@
 
 extern crate num_format;
 extern crate is31fl3730;
+extern crate lsm9ds1 as lsm;
 //extern crate panic_halt;
 extern crate panic_semihosting;
 
@@ -49,13 +50,13 @@ fn main() -> ! {
         dp.I2C1,
         (scl, sda),
         &mut afio.mapr,
-        Mode::Fast {
-            frequency: 400_000,
-            duty_cycle: DutyCycle::Ratio2to1,
-        },
-//        Mode::Standard {
-//            frequency: 100_000,
+//        Mode::Fast {
+//            frequency: 400_000,
+//            duty_cycle: DutyCycle::Ratio2to1,
 //        },
+        Mode::Standard {
+            frequency: 100_000,
+        },
         clocks,
         &mut rcc.apb1,
         1000,
@@ -64,6 +65,8 @@ fn main() -> ! {
         1000,
     );
     let bus = shared_bus::CortexMBusManager::new(i2c);
+
+    let mut gyro = lsm::Device::new(bus.acquire());
 
     let mut screen = board::Screen::new(bus.acquire(), bus.acquire());
     let mut led = gpioa.pa1.into_push_pull_output(&mut gpioa.crl);
@@ -86,7 +89,7 @@ fn main() -> ! {
             ProFont7Point::render_str( buffer.as_str())
                 .into_iter()
         );
-        value += 11;
+        value += 112;
 
         screen.render(&canvas);
 

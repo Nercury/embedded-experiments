@@ -17,6 +17,7 @@ embedded-graphics = "0.4.7"
 profont = { version = "0.2.0", features = [] }
 mcp23008 = { path = "../mcp" }
 is31fl3730 = { path = "../is31fl3730" }
+lsm9ds1 = { path = "../lsm9ds1" }
 bitcanvas = { path = "../bitcanvas" }
 num-format = { version = "0.4.0", default-features = false }
 
